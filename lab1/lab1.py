@@ -1,18 +1,42 @@
 import math
+
+#Daca nu primim parametru, presupun ca inputul si outputul se iau de la consola
+#Daca primim parametru, returnam rezultatul
+
+
  #Problema 1
 
-def P1():
-    cuvinte = input("Introduceti cuvintele\n").split(" ")
+def P1(default=""):
+    if len(default) == 0:
+        cuvinte = input("Introduceti cuvintele\n").split(" ")
+    else:
+        cuvinte = default.split(" ")
     max = ""
     for cuvant in cuvinte:
-        if max < cuvant:    
+        if max.upper() < cuvant.upper():    
             max = cuvant
+    if(len(default) == 0):
+        print(max)
+    else:
+        return(max)
 
-    print(max)
+def testP1():
+    fraze = ["Zebre doi trei", "Una bucata Zebra", "Am sa merg si am sa merg iar"]
+    raspunsuri = ["Zebre", "Zebra", "si"]
+    for i in range(len(fraze)):
+        try:
+            assert(P1(fraze[i]) == raspunsuri[i])
+            print("Test #" + str(i) + " passed")
+        except:
+            print("Test #" + str(i) + " failed")
+
+
+
 
 #Problema 2
 
-def radical(x, p):
+
+def radical(x, p=0.001):
     st = 0
     dr = x
     while st <= dr:
@@ -23,34 +47,48 @@ def radical(x, p):
             st = mij
         else:
             dr = mij
-        
 
-def P2():
-    x1,y1=input("Introduceti primul punct:\n").split(" ")
-    x2,y2=input("Introduceti al 2-lea punct:\n").split(" ")
+
+
+def P2(default=""):
+    if len(default) == 0:
+        x1,y1=input("Introduceti primul punct:\n").split(" ")
+        x2,y2=input("Introduceti al 2-lea punct:\n").split(" ")
+    else:
+        x1, y1, x2, y2 = default.split(" ")
+
     x1 = int(x1)
     x2 = int(x2)
     y1 = int(y1)
     y2 = int(y2)
-    rez = math.sqrt((x1-x2) * (x1 - x2) + (y1 - y2) * (y1-y2))
-    print("Distanta este: ",rez )
+    rez = radical((x1-x2) * (x1 - x2) + (y1 - y2) * (y1-y2))
+    if len(default)==0:
+        print("Distanta este: ", "{:.2f}".format(round(rez, 2)))
+    else:
+        return round(rez, 2)
+
+
+def testP2():
+    puncte = ["6 8 4 1", "8 3 10 5", "6 5 7 4"]
+    rez = [7.28, 2.83, 1.41]
+
+    for i in range(len(puncte)):
+        try:
+            assert(round(P2(puncte[i]), 2) == rez[i])
+            print("Test #" + str(i) + " passed")
+        except:
+            print("Test #" + str(i) + " failed")
 
 #Problema 3
 
 def P3():
-    sum=0
     n = int(input("Introduceti lungimea vectorilor: "))
     v1 = []
     v2 = []
-    print("Elementele primului vector: ")
-    for i in range(0, n):
-        v1.append(int(input()))
-    print("Elementele celui de-al doilea vector: ")
-    for i in range(0, n):
-        v2.append(int(input()))
-    for i in range(0, n):
-        sum = sum + v1[i] * v2[i]
-    print("Produsul scalar este: ",sum)
+    v1 =[int(x) for x in input("Elementele primului vector: ").split(" ")]
+    v2 =[int(x) for x in input( "Elementele celui de-al doilea vector: ").split(" ")]
+    s =  sum([v1[i] * v2[i] for i in range(0, n)]) 
+    print("Produsul scalar este: ",s)
 
 #Problema 4
 
@@ -74,12 +112,12 @@ def P4():
 
 #Problema 5
 def P5():
-    n = int(input())
+    n = int(input("Introduceti numarul de elemente:"))
     v = []
     for i in range(0, n):
         v.append(0)
     for i in range(0, n):
-        x = int(input())
+        x = int(input("Elementul $i:"))
         v[x] = v[x] + 1
     for x in v:
         if x == 2:
