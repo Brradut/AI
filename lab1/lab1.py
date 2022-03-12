@@ -125,7 +125,7 @@ def P4(default=""):
     pre2 = ""
 
     #luam o fereastra de 3 elemente, si comparam elementul din mijloc cu elementul de la stanga si dreapta
-    #adca elementul din mijloc e diferit de ambele, atunci e unic in text
+    #daca elementul din mijloc e diferit de ambele, atunci e unic in text
     if len(vect) > 1 and vect[0] != vect[1]:
         rez.append(vect[0])
     
