@@ -1,0 +1,48 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+
+
+def distance(x, y):
+    return np.sqrt(np.sum((x - y)**2, axis=1))
+
+
+class KMeans:
+    def __init__(self, k=2, max_iter=100):
+        self.k =k
+        self.max_iter = max_iter
+        self.centroids = []
+
+    def fit(self, x):
+        x = x.toarray()
+        self.centroids = [random.choice(x)]
+        for _ in range(self.k-1):
+
+            d = np.sum([euclidean(centroid, x) for centroid in self.centroids], axis=0)
+            d = d / np.sum(dists)
+
+            a, = np.random.choice(range(len(x)), size=1, p=d)
+            self.centroids += [x[a]]
+        iteration = 0
+        prev_centroids = None
+        while np.not_equal(self.centroids, prev_centroids).any() and iteration < self.max_iter:
+
+            sorted_points = [[] for _ in range(self.k)]
+
+            for x in x:
+                d = euclidean(x, self.centroids)
+                a= np.argmin(d)
+                sorted_points[a].append(x)
+
+            prev_centroids = self.centroids 
+            self.centroids = [np.mean(cluster, axis=0) for cluster in sorted_points]
+            iteration += 1
+
+    def predict(self, x):
+        x = x.toarray()
+        cs = []
+        for x in X:
+            d = euclidean(x, self.centroids)
+            c = np.argmin(d)
+            cs.append(c)
+        return cs
